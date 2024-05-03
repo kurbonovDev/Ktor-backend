@@ -46,4 +46,6 @@ dependencies {
 
     implementation("com.sun.mail:javax.mail:1.6.2")
 
+    implementation("com.google.code.gson:gson:2.8.8")
+
 }
