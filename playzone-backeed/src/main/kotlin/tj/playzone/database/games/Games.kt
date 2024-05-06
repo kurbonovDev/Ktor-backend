@@ -2,6 +2,7 @@ package tj.playzone.database.games
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -49,7 +50,7 @@ object Games : Table() {
                             description = it[description],
                             versionGame = it[versionGame],
                             sizeGame = it[sizeGame],
-                            logo=it[logo],
+                            logo = it[logo],
                             image = it[image],
                             rateGame = it[rateGame],
                             downloadCount = it[downloadCount]
@@ -60,4 +61,30 @@ object Games : Table() {
             emptyList()
         }
     }
+
+    fun getGame(gameName: String): Pair<GameDTO?, Boolean> {
+        return try {
+            val game = transaction {
+                Games.select { Games.gameName eq gameName }.firstOrNull()?.let {
+                    GameDTO(
+                        it[Games.gameId],
+                        it[Games.gameName],
+                        it[Games.description],
+                        it[Games.versionGame],
+                        it[Games.sizeGame],
+                        it[Games.image],
+                        it[Games.logo],
+                        it[Games.downloadCount],
+                        it[Games.rateGame]
+                    )
+                }
+            }
+            Pair(game, game != null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Pair(null, false)
+        }
+    }
+
+
 }

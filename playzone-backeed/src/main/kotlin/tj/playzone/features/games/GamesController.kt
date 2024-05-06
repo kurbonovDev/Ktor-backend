@@ -7,7 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import tj.playzone.database.admin_features.genres.Genres
-import tj.playzone.database.admin_features.relation_games_genres.GameGenresTable
+import tj.playzone.database.admin_features.genres.relation_games_genres.GameGenresTable
 import tj.playzone.database.games.Games
 import tj.playzone.database.games.mapToCreateGameResponse
 import tj.playzone.database.games.mapToGameDTO
@@ -48,9 +48,10 @@ class GamesController(private val call: ApplicationCall) {
                     is PartData.FileItem -> {
                         if (part.name == "image") {
                             val name = part.originalFileName ?: "unknown"
-                            val folderPath = "./images/games"
-                            val file = File("$folderPath/$name")
-                            filePathImage = "$folderPath/$name"
+                            val folderPath = "/images/games"
+                            val folderPathLocal = "./images/games"
+                            val file = File("$folderPathLocal/$name")
+                            filePathImage = "http://127.0.0.1:8080/$folderPath/$name"
                             try {
                                 file.parentFile.mkdirs()
                                 part.streamProvider().use { input ->
@@ -66,9 +67,10 @@ class GamesController(private val call: ApplicationCall) {
 
                         if (part.name == "logo") {
                             val name = part.originalFileName ?: "unknown"
-                            val folderPath = "./images/games"
-                            val file = File("$folderPath/$name")
-                            filePathLogo = "$folderPath/$name"
+                            val folderPath = "/images/games"
+                            val folderPathLocal = "./images/games"
+                            val file = File("$folderPathLocal/$name")
+                            filePathLogo = "http://127.0.0.1:8080/$folderPath/$name"
                             try {
                                 file.parentFile.mkdirs()
                                 part.streamProvider().use { input ->

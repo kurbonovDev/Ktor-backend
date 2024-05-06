@@ -1,4 +1,4 @@
-package tj.playzone.database.admin_features.relation_games_genres
+package tj.playzone.database.admin_features.genres.relation_games_genres
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert

@@ -3,12 +3,14 @@ package tj.playzone
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import org.jetbrains.exposed.sql.Database
+import tj.playzone.features.event.configureEvents
 import tj.playzone.features.forget_password.configureForgetPasswordRouting
 import tj.playzone.features.forget_password.configureConfirmPasswordRouting
 import tj.playzone.features.games.configureGamesRouting
 import tj.playzone.features.login.configureLoginRouting
 import tj.playzone.features.register.configureEmailRouting
 import tj.playzone.features.register.configureRegisterRouting
+import tj.playzone.features.user_genres.configureUserGenresRouting
 import tj.playzone.plugins.configureRouting
 import tj.playzone.plugins.configureSerialization
 import tj.playzone.utils.dbPassword
@@ -32,6 +34,8 @@ fun main() {
         configureForgetPasswordRouting()
         configureConfirmPasswordRouting()
         configureGamesRouting()
+        configureEvents()
+        configureUserGenresRouting()
     }
         .start(wait = true)
 }
