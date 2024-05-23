@@ -1,40 +1,44 @@
 package tj.playzone.database.users
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 
-object Users:Table() {
-    private val login = Users.varchar("login",25)
-    private val password = Users.varchar("password",25)
-    private val username = Users.varchar("username",30)
-    private val email = Users.varchar("email",50)
+object Users : Table() {
+    private val login = Users.varchar("login", 25)
+    private val password = Users.varchar("password", 25)
+    private val username = Users.varchar("username", 40)
+    private val email = Users.varchar("email", 50)
+    private val userImage = Users.varchar("userImage", 200)
 
 
-    fun insert(userDTO: UserDTO){
-            transaction {
-                   Users.insert {
-                       it[login]=userDTO.login
-                       it[password]=userDTO.password
-                       it[username]=userDTO.username
-                       it[email]=userDTO.email?:""
-                   }
+    fun insert(userDTO: UserDTO) {
+        transaction {
+            Users.insert {
+                it[login] = userDTO.login
+                it[password] = userDTO.password
+                it[username] = userDTO.username ?: ""
+                it[email] = userDTO.email
+                it[userImage] = userDTO.userImage ?: ""
             }
+        }
     }
 
 
-    fun fetchUser(login:String):UserDTO?{
+    fun fetchUser(login: String): UserDTO? {
         return try {
             transaction {
-                val userModel= Users.select{Users.login.eq(login)}.single()
+                val userModel = Users.select { Users.login.eq(login) }.single()
                 UserDTO(
-                    login=userModel[Users.login],
+                    login = userModel[Users.login],
                     password = userModel[password],
                     username = userModel[username],
-                    email = userModel[email]
+                    email = userModel[email],
+                    userImage = userModel[userImage]
                 )
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }
@@ -52,7 +56,8 @@ object Users:Table() {
                         login = userModel[Users.login],
                         password = userModel[Users.password],
                         username = userModel[Users.username],
-                        email = userModel[Users.email]
+                        email = userModel[Users.email],
+                        userImage = userModel[Users.userImage]
                     )
                 }
             }
@@ -63,19 +68,20 @@ object Users:Table() {
     }
 
 
-    fun fetchUserByEmail(emailForReset: String):UserDTO?{
+    fun fetchUserByEmail(emailForReset: String): UserDTO? {
         return try {
             transaction {
-                val userModel= Users.select{Users.email.eq(emailForReset)}.single()
+                val userModel = Users.select { Users.email.eq(emailForReset) }.single()
                 UserDTO(
-                    login=userModel[Users.login],
+                    login = userModel[Users.login],
                     password = userModel[password],
                     username = userModel[username],
-                    email = userModel[email]
+                    email = userModel[email],
+                    userImage = userModel[Users.userImage]
                 )
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }
@@ -93,8 +99,15 @@ object Users:Table() {
         }
     }
 
-
-
+    fun updateUser(userDTO: UserDTO) {
+        transaction {
+            Users.update({ Users.login.eq(userDTO.login) }) {
+                it[userImage]=userDTO.userImage?:""
+                it[username]= userDTO.username?:""
+                it[password]=userDTO.password
+            }
+        }
+    }
 
 
 }

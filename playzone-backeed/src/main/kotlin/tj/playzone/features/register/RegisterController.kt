@@ -17,7 +17,7 @@ import java.util.*
 
 class RegisterController(private val call: ApplicationCall) {
 
-   private val emailService = EmailService("smtp.gmail.com", 587, emailForSentMessages, passwordForEmailSentMessages)
+    private val emailService = EmailService("smtp.gmail.com", 587, emailForSentMessages, passwordForEmailSentMessages)
 
 
     suspend fun registerNewUser() {
@@ -26,54 +26,54 @@ class RegisterController(private val call: ApplicationCall) {
 
         if (userDTO != null) {
             call.respond(HttpStatusCode.Conflict, "User is already exist")
-        }else{
-
-        val otpCode ="1234"
-        emailService.sendOtpEmail(registerReceiveRemote.email, otpCode)
-        call.respond("OTP code sent to ${registerReceiveRemote.email}")
-        TemporaryCache.addData(registerReceiveRemote.email,otpCode)
-
-        }
-
-
-      /*  if (registerReceiveRemote.email.isValidEmail()) {
-            call.respond(HttpStatusCode.BadRequest, "Email is not valid")  //если его нету то отпряем BadRequest
-        }
-        val userDTO = Users.fetchUser(registerReceiveRemote.login)
-
-
-        if (userDTO != null) {
-            call.respond(HttpStatusCode.Conflict, "User is already exist")
         } else {
-            val token = UUID.randomUUID().toString()
 
-            try {
-                Users.insert(
-                    UserDTO(
-                        login = registerReceiveRemote.login,
-                        password = registerReceiveRemote.password,
-                        email = registerReceiveRemote.email,
-                        username = ""
-                    )
-                )
+            val otpCode = "1234"
+            emailService.sendOtpEmail(registerReceiveRemote.email, otpCode)
+            call.respond("OTP code sent to ${registerReceiveRemote.email}")
+            TemporaryCache.addData(registerReceiveRemote.email, otpCode)
+
+        }
 
 
-            }catch (e:ExposedSQLException){
-                call.respond(HttpStatusCode.Conflict, "User is already exist")
-            }
+        /*  if (registerReceiveRemote.email.isValidEmail()) {
+              call.respond(HttpStatusCode.BadRequest, "Email is not valid")  //если его нету то отпряем BadRequest
+          }
+          val userDTO = Users.fetchUser(registerReceiveRemote.login)
+
+
+          if (userDTO != null) {
+              call.respond(HttpStatusCode.Conflict, "User is already exist")
+          } else {
+              val token = UUID.randomUUID().toString()
+
+              try {
+                  Users.insert(
+                      UserDTO(
+                          login = registerReceiveRemote.login,
+                          password = registerReceiveRemote.password,
+                          email = registerReceiveRemote.email,
+                          username = ""
+                      )
+                  )
+
+
+              }catch (e:ExposedSQLException){
+                  call.respond(HttpStatusCode.Conflict, "User is already exist")
+              }
 
 
 
 
-            Tokens.insert(
-                TokenDTO(
-                    rowId = UUID.randomUUID().toString(),
-                    login = registerReceiveRemote.login,
-                    token = token
-                )
-            )
-            call.respond(RegisterResponseRemote(token = token))
-        }*/
+              Tokens.insert(
+                  TokenDTO(
+                      rowId = UUID.randomUUID().toString(),
+                      login = registerReceiveRemote.login,
+                      token = token
+                  )
+              )
+              call.respond(RegisterResponseRemote(token = token))
+          }*/
 
 
     }

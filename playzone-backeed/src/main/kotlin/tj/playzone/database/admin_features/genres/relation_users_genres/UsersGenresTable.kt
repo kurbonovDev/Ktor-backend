@@ -33,8 +33,9 @@ object UserGenresTable : Table() {
 
     }
 
-    fun selectUserGenres(userLogin: FetchUser):RespondUserGenres{
+    fun selectUserGenres(userLogin: FetchUser): RespondUserGenres {
         val userGenres = mutableListOf<String>()
+
         transaction {
             UserGenresTable.select {
                 UserGenresTable.userLogin eq userLogin.login
@@ -56,10 +57,10 @@ data class UsersGenresTableDTO(
 
 @Serializable
 data class FetchUser(
-    val login:String
+    val login: String
 )
 
 @Serializable
 data class RespondUserGenres(
-    val userGenres:List<String>
+    val userGenres: List<String>
 )

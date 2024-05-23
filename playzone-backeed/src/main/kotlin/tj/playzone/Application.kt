@@ -10,6 +10,7 @@ import tj.playzone.features.games.configureGamesRouting
 import tj.playzone.features.login.configureLoginRouting
 import tj.playzone.features.register.configureEmailRouting
 import tj.playzone.features.register.configureRegisterRouting
+import tj.playzone.features.update_info_user.configureUpdateInfoRouting
 import tj.playzone.features.user_genres.configureUserGenresRouting
 import tj.playzone.plugins.configureRouting
 import tj.playzone.plugins.configureSerialization
@@ -36,6 +37,7 @@ fun main() {
         configureGamesRouting()
         configureEvents()
         configureUserGenresRouting()
+        configureUpdateInfoRouting()
     }
         .start(wait = true)
 }

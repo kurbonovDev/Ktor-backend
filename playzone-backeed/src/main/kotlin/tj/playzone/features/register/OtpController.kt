@@ -34,7 +34,8 @@ class OtpController(private val call: ApplicationCall) {
                             login = otpReceive.login,
                             password = otpReceive.password,
                             email = otpReceive.email,
-                            username = ""
+                            username = "",
+                            userImage = "",
                         )
                     )
 
