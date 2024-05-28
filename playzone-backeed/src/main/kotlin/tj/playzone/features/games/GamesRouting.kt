@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import tj.playzone.features.games.game_genres.GameGenreController
 import java.io.File
 
 fun Application.configureGamesRouting() {
@@ -31,6 +32,11 @@ fun Application.configureGamesRouting() {
             } else {
                 call.respond(HttpStatusCode.BadRequest, "Missing image name parameter")
             }
+        }
+
+        post ("games/genres"){
+            val gamesGenreController = GameGenreController(call)
+            gamesGenreController.getGameGenres()
         }
 
 

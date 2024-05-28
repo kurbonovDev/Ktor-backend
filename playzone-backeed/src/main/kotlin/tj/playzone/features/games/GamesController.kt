@@ -118,7 +118,7 @@ class GamesController(private val call: ApplicationCall) {
                 listGenre.forEach {
                     val genre = Genres.selectGenresByName(it)
                     if (genre != null)
-                        GameGenresTable.insertGameGenres(gameId = game.gameID, genre.genreId)
+                        GameGenresTable.insertGameGenres(gameId = game.gameID, genre.genreId, genre.genreName)
                 }
 
 

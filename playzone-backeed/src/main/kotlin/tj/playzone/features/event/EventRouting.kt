@@ -4,6 +4,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import tj.playzone.database.admin_features.events.images.EventImagesController
 import tj.playzone.features.games.GamesController
 import java.io.File
 
@@ -32,6 +33,11 @@ fun Application.configureEvents(){
             } else {
                 call.respond(HttpStatusCode.BadRequest, "Missing image name parameter")
             }
+        }
+
+        post ("events/fetch/images"){
+            val eventImagesController = EventImagesController(call)
+            eventImagesController.getEventImages()
         }
 
 

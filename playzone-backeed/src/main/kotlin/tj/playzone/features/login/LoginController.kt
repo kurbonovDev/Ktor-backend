@@ -20,7 +20,6 @@ class LoginController(private val call: ApplicationCall) {
         } else {
             if (userDTO.password == receive.password) {
                 val token = UUID.randomUUID().toString()
-
                 Tokens.insert(
                     TokenDTO(
                         rowId = UUID.randomUUID().toString(),

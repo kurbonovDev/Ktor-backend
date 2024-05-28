@@ -15,7 +15,8 @@ data class GameDTO(
     var image:String?,
     var logo:String?,
     val downloadCount:Int,
-    val rateGame:Int
+    val rateGame:Int,
+
 
 )
 
@@ -29,7 +30,8 @@ fun CreateGameRequest.mapToGameDTO(): GameDTO =
         image = null,
         logo=null,
         downloadCount = downloadCount,
-        rateGame=rateGame
+        rateGame=rateGame,
+
 
     )
 
@@ -44,6 +46,4 @@ fun GameDTO.mapToCreateGameResponse(): CreateGameResponse =
         logo= logo!!,
         rateGame=rateGame,
         downloadCount = downloadCount
-
-
     )

@@ -1,10 +1,12 @@
 package tj.playzone.database.games
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.postgresql.jdbc.PgArray
+import org.postgresql.util.PGobject
+import tj.playzone.utils.toJson
+import tj.playzone.utils.toListOfStrings
+import java.sql.PreparedStatement
 
 object Games : Table() {
     private val gameId = Games.varchar(name = "gameId", length = 100)
@@ -16,6 +18,7 @@ object Games : Table() {
     private var logo = Games.varchar(name = "logo", length = 200)
     private var downloadCount = Games.integer(name = "downloadCount")
     private var rateGame = Games.integer(name = "rateGame")
+
 
     fun insert(gameDTO: GameDTO): Boolean {
         return try {
@@ -30,6 +33,7 @@ object Games : Table() {
                     it[logo] = gameDTO.logo!!
                     it[downloadCount] = gameDTO.downloadCount
                     it[rateGame] = gameDTO.rateGame
+
                 }
             }
             result != null
@@ -54,6 +58,7 @@ object Games : Table() {
                             image = it[image],
                             rateGame = it[rateGame],
                             downloadCount = it[downloadCount]
+
                         )
                     }
             }
@@ -86,5 +91,5 @@ object Games : Table() {
         }
     }
 
-
 }
+

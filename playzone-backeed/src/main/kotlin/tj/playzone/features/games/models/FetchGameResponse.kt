@@ -17,5 +17,6 @@ data class GameResponse(
     val logo:String,
     val image:String,
     val downloadCount:Int,
-    val rateGame:Int
+    val rateGame:Int,
+    val moreImage:List<String>
 )

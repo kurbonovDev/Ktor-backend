@@ -48,7 +48,7 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.8.8")
 
-
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 
 
 

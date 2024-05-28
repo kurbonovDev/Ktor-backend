@@ -9,7 +9,7 @@ data class CreateGameRequest(
     val versionGame: String,
     val sizeGame: String,
     val downloadCount:Int,
-    val rateGame:Int
+    val rateGame:Int,
 )
 
 @Serializable
@@ -22,6 +22,5 @@ data class CreateGameResponse(
     val image:String,
     val logo:String,
     val downloadCount: Int,
-    val rateGame: Int
-
+    val rateGame: Int,
 )
