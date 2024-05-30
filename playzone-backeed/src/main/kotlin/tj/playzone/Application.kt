@@ -2,6 +2,7 @@ package tj.playzone
 
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import org.jetbrains.exposed.sql.Database
 import tj.playzone.features.event.configureEvents
 import tj.playzone.features.forget_password.configureForgetPasswordRouting
@@ -26,7 +27,8 @@ fun main() {
         password = dbPassword,
         user = dbUser
     )
-    embeddedServer(CIO, port = 8080, host = "0.0.0.0"){
+
+    embeddedServer(Netty, port = System.getenv("PORT").toInt()){
         configureRouting()
         configureLoginRouting()
         configureRegisterRouting()
