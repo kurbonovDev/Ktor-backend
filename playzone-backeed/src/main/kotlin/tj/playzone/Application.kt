@@ -21,14 +21,27 @@ import tj.playzone.utils.dbUser
 fun main() {
 
 
-    val connect = Database.connect(
+    /*val connect = Database.connect(
         "jdbc:postgresql://localhost:5432/playzone",
         driver = "org.postgresql.Driver",
         password = dbPassword,
         user = dbUser
-    )
-
-    embeddedServer(Netty, port = System.getenv("PORT").toInt()){
+    )*/
+    val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
+     embeddedServer(Netty, port = port) {
+         configureRouting()
+         configureLoginRouting()
+         configureRegisterRouting()
+         configureSerialization()
+         configureEmailRouting()
+         configureForgetPasswordRouting()
+         configureConfirmPasswordRouting()
+         configureGamesRouting()
+         configureEvents()
+         configureUserGenresRouting()
+         configureUpdateInfoRouting()
+     }.start(wait = true)
+    /*embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
         configureRouting()
         configureLoginRouting()
         configureRegisterRouting()
@@ -41,7 +54,7 @@ fun main() {
         configureUserGenresRouting()
         configureUpdateInfoRouting()
     }
-        .start(wait = true)
+        .start(wait = true)*/
 }
 
 
